@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SG Data & Automatización | Asistente Virtual en Honduras</title>
+<meta name="description" content="Asistencia administrativa, Excel, macros VBA, Power BI, SQL, Python e inventarios. Trabajo remoto o presencial desde Tegucigalpa, Honduras. Cotización sin costo.">
+<meta name="theme-color" content="#061029">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23061029'/><text x='50' y='66' font-size='52' font-family='Arial' font-weight='700' text-anchor='middle' fill='%2322d3ee'>SG</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#061029;
+    --bg-2:#0a1838;
+    --panel:#0e2050;
+    --line:#1c3470;
+    --cyan:#22d3ee;
+    --cyan-dim:#0e7490;
+    --text:#e8eefc;
+    --muted:#9bacd0;
+    --danger:#ff8a8a;
+    --ok:#6ee7b7;
+    --display:"Bricolage Grotesque","Trebuchet MS",Arial,sans-serif;
+    --body:"Instrument Sans","Segoe UI",Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:76px}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:var(--body);font-size:1.0625rem;line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--cyan);outline-offset:3px;border-radius:4px}
+  .wrap{width:min(1120px,100% - 2.5rem);margin-inline:auto}
+
+  /* Header */
+  header.top{
+    position:sticky;top:0;z-index:20;
+    background:rgba(6,16,41,.88);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:1rem}
+  .brand{display:flex;align-items:center;gap:.7rem;text-decoration:none;font-family:var(--display);font-weight:700;font-size:1.05rem;letter-spacing:-.01em}
+  .brand svg{width:36px;height:36px;flex:none}
+  .brand small{display:block;font-family:var(--body);font-weight:500;font-size:.78rem;color:var(--cyan);letter-spacing:.02em;line-height:1.1}
+  nav.menu{display:flex;gap:1.6rem;align-items:center}
+  nav.menu a{text-decoration:none;color:var(--muted);font-weight:500;font-size:.98rem}
+  nav.menu a:hover{color:var(--text)}
+  .btn{
+    display:inline-block;border:0;cursor:pointer;text-decoration:none;
+    background:var(--cyan);color:#04202a;font-family:var(--body);font-weight:600;font-size:1rem;
+    padding:.8rem 1.4rem;border-radius:10px;transition:background .15s, transform .15s;
+  }
+  .btn:hover{background:#67e8f9}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:transparent;color:var(--text);box-shadow:inset 0 0 0 1.5px var(--line)}
+  .btn.ghost:hover{background:var(--panel)}
+  .btn.small{padding:.5rem .95rem;font-size:.92rem}
+
+  /* Hero */
+  .hero{
+    position:relative;overflow:hidden;
+    padding:clamp(3.5rem,9vw,7rem) 0 clamp(3rem,7vw,5rem);
+    background:
+      linear-gradient(var(--bg) 0, transparent 30%, transparent 70%, var(--bg) 100%),
+      linear-gradient(90deg, rgba(34,211,238,.07) 1px, transparent 1px) 0 0/48px 48px,
+      linear-gradient(rgba(34,211,238,.07) 1px, transparent 1px) 0 0/48px 48px,
+      var(--bg);
+  }
+  .hero h1{
+    font-family:var(--display);font-weight:800;
+    font-size:clamp(2.4rem,6.4vw,4.8rem);line-height:1.02;letter-spacing:-.035em;
+    margin:0 0 1.4rem;max-width:15ch;
+  }
+  .hero h1 .t{color:var(--cyan)}
+  .hero p.lead{font-size:clamp(1.1rem,2vw,1.3rem);color:var(--muted);max-width:52ch;margin:0 0 2rem}
+  .hero .actions{display:flex;flex-wrap:wrap;gap:.8rem}
+  .facts{
+    display:flex;flex-wrap:wrap;gap:.6rem 2rem;margin:3rem 0 0;padding:0;list-style:none;
+    color:var(--muted);font-size:.98rem;
+  }
+  .facts li{display:flex;gap:.55rem;align-items:center}
+  .facts li::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--cyan);flex:none}
+
+  /* Services */
+  section.block{padding:clamp(3rem,7vw,5.5rem) 0}
+  h2.title{
+    font-family:var(--display);font-weight:700;font-size:clamp(1.8rem,4vw,2.7rem);
+    letter-spacing:-.025em;line-height:1.1;margin:0 0 .8rem;
+  }
+  .sub{color:var(--muted);max-width:56ch;margin:0 0 2.5rem}
+  .services{border-top:1px solid var(--line)}
+  .svc{
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr) auto;gap:1rem 2.5rem;align-items:start;
+    padding:1.7rem 0;border-bottom:1px solid var(--line);
+  }
+  .svc h3{font-family:var(--display);font-size:1.35rem;font-weight:700;letter-spacing:-.015em;line-height:1.2;margin:0}
+  .svc ul{margin:0;padding:0;list-style:none;display:grid;gap:.35rem;color:var(--muted)}
+  .svc li{padding-left:1.1rem;position:relative}
+  .svc li::before{content:"";position:absolute;left:0;top:.7em;width:6px;height:2px;background:var(--cyan)}
+  .extra{
+    margin-top:2rem;padding:1.6rem 1.8rem;border-radius:14px;
+    background:var(--bg-2);border:1px dashed var(--cyan-dim);
+  }
+  .extra strong{font-family:var(--display);font-size:1.15rem}
+  .extra p{margin:.4rem 0 0;color:var(--muted)}
+
+  /* Contact */
+  .contact{background:var(--bg-2);border-top:1px solid var(--line)}
+  .contact .grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(2rem,5vw,4.5rem);align-items:start}
+  .side p{color:var(--muted);margin:0 0 1.2rem;max-width:42ch}
+  .side dl{margin:2rem 0 0;display:grid;gap:1.1rem}
+  .side dt{font-weight:600;font-size:.92rem;color:var(--cyan);margin-bottom:.1rem}
+  .side dd{margin:0;word-break:break-word}
+  form{
+    background:var(--panel);border:1px solid var(--line);border-radius:18px;
+    padding:clamp(1.3rem,3vw,2.2rem);display:grid;gap:1.15rem;
+  }
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:1.15rem}
+  label{display:block;font-weight:600;font-size:.95rem;margin-bottom:.4rem}
+  label .opt{font-weight:400;color:var(--muted)}
+  input,select,textarea{
+    width:100%;font:inherit;color:var(--text);background:var(--bg);
+    border:1.5px solid var(--line);border-radius:10px;padding:.75rem .9rem;
+  }
+  textarea{min-height:140px;resize:vertical}
+  input::placeholder,textarea::placeholder{color:#6f81a8}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(34,211,238,.25)}
+  select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 20px) 55%,calc(100% - 14px) 55%;background-size:6px 6px;background-repeat:no-repeat;padding-right:2.4rem}
+  fieldset{border:0;margin:0;padding:0}
+  legend{font-weight:600;font-size:.95rem;margin-bottom:.5rem;padding:0}
+  .choices{display:flex;gap:.6rem;flex-wrap:wrap}
+  .choices label{margin:0;font-weight:500}
+  .choices input{position:absolute;opacity:0;width:1px;height:1px}
+  .choices span{
+    display:inline-block;padding:.55rem 1.1rem;border-radius:999px;cursor:pointer;
+    border:1.5px solid var(--line);color:var(--muted);transition:all .15s;
+  }
+  .choices input:checked + span{background:var(--cyan);border-color:var(--cyan);color:#04202a;font-weight:600}
+  .choices input:focus-visible + span{outline:3px solid var(--cyan);outline-offset:3px}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .note{font-size:.9rem;color:var(--muted);margin:0}
+  #status{min-height:1.5em;margin:0;font-weight:500}
+  #status.ok{color:var(--ok)}
+  #status.err{color:var(--danger)}
+  .btn[disabled]{opacity:.6;cursor:wait}
+
+  footer{padding:2rem 0;border-top:1px solid var(--line);color:var(--muted);font-size:.92rem}
+  footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.6rem 2rem}
+
+  @media (max-width:860px){
+    nav.menu a:not(.btn){display:none}
+    .svc{grid-template-columns:1fr;gap:.9rem}
+    .svc .btn{justify-self:start}
+    .contact .grid{grid-template-columns:1fr}
+  }
+  @media (max-width:560px){
+    .row{grid-template-columns:1fr}
+    .brand small{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *{transition:none !important}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio" aria-label="SG Data & Automatización, inicio">
+      <!-- Para usar tu logo real: reemplaza este <svg> por <img src="logo.png" alt="SG Data & Automatización" width="36" height="36"> -->
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#67e8f9"/><stop offset="1" stop-color="#2563eb"/></linearGradient></defs>
+        <rect width="48" height="48" rx="11" fill="#0a1838" stroke="#1c3470"/>
+        <text x="24" y="32" font-family="Arial,sans-serif" font-weight="800" font-size="22" text-anchor="middle" fill="url(#g)">SG</text>
+      </svg>
+      <span>SG Data &amp; Automatización<small>Asistente Virtual</small></span>
+    </a>
+    <nav class="menu" aria-label="Principal">
+      <a href="#servicios">Servicios</a>
+      <a href="#contacto">Contacto</a>
+      <a class="btn small" href="#contacto">Pedir cotización</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+  <section class="hero">
+    <div class="wrap">
+      <h1>Ordeno tu información. Automatizo tus procesos. Te devuelvo <span class="t">tiempo.</span></h1>
+      <p class="lead">Apoyo administrativo, Excel, macros, Power BI, SQL y Python para que dejes de repetir tareas a mano y te enfoques en tu negocio.</p>
+      <div class="actions">
+        <a class="btn" href="#contacto">Pedir cotización sin costo</a>
+        <a class="btn ghost" href="#servicios">Ver servicios</a>
+      </div>
+      <ul class="facts">
+        <li>100% remoto o presencial si lo requieres</li>
+        <li>Tegucigalpa, Honduras</li>
+        <li>Clientes en Honduras y el extranjero</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block" id="servicios">
+    <div class="wrap">
+      <h2 class="title">Servicios</h2>
+      <p class="sub">Elige el que te interesa y el formulario se completa por ti.</p>
+      <div class="services" id="lista-servicios"></div>
+
+      <div class="extra">
+        <strong>¿No ves lo que necesitas?</strong>
+        <p>Estos son mis servicios, pero si tu necesidad es otra, plantéame tu idea o cuéntame en qué te puedo ayudar y buscamos la mejor solución.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block contact" id="contacto">
+    <div class="wrap grid">
+      <div class="side">
+        <h2 class="title">Cuéntame qué tarea te quita tiempo</h2>
+        <p>Escríbeme tu consulta y te respondo por correo con una propuesta y una cotización sin costo.</p>
+        <dl>
+          <div><dt>Correo</dt><dd><a href="mailto:Info.sgvirtual@gmail.com">Info.sgvirtual@gmail.com</a></dd></div>
+          <div><dt>Modalidad</dt><dd>Remoto, o presencial si lo requieres</dd></div>
+          <div><dt>Ubicación</dt><dd>Tegucigalpa, Honduras. Atiendo clientes en Honduras y el extranjero.</dd></div>
+        </dl>
+      </div>
+
+      <form id="form-consulta" action="https://api.web3forms.com/submit" method="POST" novalidate>
+        <!-- 1) Pega aquí tu Access Key de Web3Forms (https://web3forms.com) -->
+        <input type="hidden" name="access_key" value="aca81b2d-d7ff-49ea-aeea-4b09bef5f511">
+        <input type="hidden" name="subject" value="Nueva consulta desde la web de SG Data & Automatización">
+        <input type="hidden" name="from_name" value="Web SG Data & Automatización">
+        <!-- Anti-spam (honeypot) -->
+        <div class="hp" aria-hidden="true"><input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off"></div>
+
+        <div class="row">
+          <div>
+            <label for="nombre">Nombre</label>
+            <input id="nombre" name="nombre" type="text" autocomplete="name" required placeholder="Tu nombre">
+          </div>
+          <div>
+            <label for="email">Correo electrónico</label>
+            <input id="email" name="email" type="email" autocomplete="email" required placeholder="tu@correo.com">
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="telefono">Teléfono o WhatsApp <span class="opt">(opcional)</span></label>
+            <input id="telefono" name="telefono" type="tel" autocomplete="tel" placeholder="+504 0000-0000">
+          </div>
+          <div>
+            <label for="servicio">Servicio de interés</label>
+            <select id="servicio" name="servicio" required></select>
+          </div>
+        </div>
+
+        <fieldset>
+          <legend>Modalidad</legend>
+          <div class="choices">
+            <label><input type="radio" name="modalidad" value="Remoto" checked><span>Remoto</span></label>
+            <label><input type="radio" name="modalidad" value="Presencial"><span>Presencial</span></label>
+          </div>
+        </fieldset>
+
+        <div>
+          <label for="mensaje">¿En qué te puedo ayudar?</label>
+          <textarea id="mensaje" name="mensaje" required placeholder="Describe la tarea o el problema. Si tienes un archivo de ejemplo, menciónalo y te lo pido por correo."></textarea>
+        </div>
+
+        <button class="btn" type="submit" id="enviar">Enviar consulta</button>
+        <p id="status" role="status" aria-live="polite"></p>
+        <p class="note">Usaré tus datos solo para responder tu consulta.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>SG Data &amp; Automatización | Asistente Virtual</span>
+    <span>Tegucigalpa, Honduras · <a href="mailto:Info.sgvirtual@gmail.com">Info.sgvirtual@gmail.com</a></span>
+  </div>
+</footer>
+
+<script>
+  // Fuente única de los servicios: alimenta la lista y el selector del formulario.
+  const SERVICIOS = [
+    { t:"Asistencia administrativa", i:["Correo, agenda y correspondencia","Archivos físicos y digitales ordenados","Registro de ingresos, gastos y reportes","Seguimiento de solicitudes y tareas"] },
+    { t:"Organización y captura de datos", i:["Data entry preciso y verificado","Limpieza y depuración de bases de datos","Estandarización de registros","Migración entre archivos y formatos"] },
+    { t:"Excel: reportes y tablas dinámicas", i:["Tablas dinámicas y fórmulas avanzadas","Plantillas automáticas (facturas, presupuestos)","Reportes de control interno y existencias","Formato condicional y validación de datos"] },
+    { t:"Automatización con macros (VBA)", i:["Macros para reportes y consolidación","Procesos de Excel en un solo botón","Flujos a la medida de tu operación","Menos errores manuales"] },
+    { t:"Dashboards en Power BI", i:["Indicadores clave (KPIs) a la vista","Gráficos interactivos y filtros dinámicos","Conexión a Excel, SQL y otras fuentes","Reportes que se entienden de un vistazo"] },
+    { t:"Bases de datos SQL", i:["Diseño y estructura de bases de datos","Consultas para extraer lo que necesitas","Relación y organización de tablas","Reportes a partir de tus datos"] },
+    { t:"Automatización con Python", i:["Scripts para procesos repetitivos","Generación automática de reportes","Extracción de datos web (web scraping)","Procesamiento masivo de Excel y PDF"] },
+    { t:"Soporte técnico remoto", i:["Help desk de primer nivel (AnyDesk, TeamViewer)","Configuración y resolución de fallas","Gestión de usuarios, accesos y respaldos","Registro y seguimiento de incidencias"] },
+    { t:"Gestión de inventarios digital", i:["Control de inventarios en Excel","Entradas, salidas y existencias","Verificación contra órdenes de compra","Reportes de stock y control interno"] },
+    { t:"Plantillas y formularios a medida", i:["Formularios de captura de datos","Plantillas de control y seguimiento","Documentos y reportes estandarizados","Documentación clara de procesos"] }
+  ];
+
+  const lista = document.getElementById("lista-servicios");
+  const select = document.getElementById("servicio");
+
+  select.add(new Option("Elige un servicio", "", true, true));
+  select.options[0].disabled = true;
+
+  SERVICIOS.forEach(s => {
+    const row = document.createElement("article");
+    row.className = "svc";
+    row.innerHTML =
+      `<h3></h3><ul>${s.i.map(x => `<li></li>`).join("")}</ul>` +
+      `<button type="button" class="btn ghost small">Consultar</button>`;
+    row.querySelector("h3").textContent = s.t;
+    row.querySelectorAll("li").forEach((li, n) => li.textContent = s.i[n]);
+    row.querySelector("button").setAttribute("aria-label", "Consultar sobre " + s.t);
+    row.querySelector("button").addEventListener("click", () => {
+      select.value = s.t;
+      document.getElementById("contacto").scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+      setTimeout(() => document.getElementById("nombre").focus({preventScroll:true}), 500);
+    });
+    lista.appendChild(row);
+    select.add(new Option(s.t, s.t));
+  });
+  select.add(new Option("Otro / no estoy seguro", "Otro / no estoy seguro"));
+
+  // Envío con Web3Forms (sin recargar la página)
+  const form = document.getElementById("form-consulta");
+  const status = document.getElementById("status");
+  const btn = document.getElementById("enviar");
+
+  function setStatus(msg, cls){ status.textContent = msg; status.className = cls || ""; }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    setStatus("");
+
+    if (!form.nombre.value.trim() || !form.mensaje.value.trim()) {
+      return setStatus("Completa tu nombre y el mensaje.", "err");
+    }
+    if (!form.email.checkValidity() || !form.email.value.trim()) {
+      return setStatus("Escribe un correo válido para poder responderte.", "err");
+    }
+    if (!form.servicio.value) {
+      return setStatus("Elige un servicio de interés.", "err");
+    }
+    if (form.access_key.value === "TU_ACCESS_KEY_AQUI") {
+      return setStatus("Falta configurar la Access Key de Web3Forms en el archivo index.html.", "err");
+    }
+
+    btn.disabled = true;
+    btn.textContent = "Enviando…";
+    try {
+      const res = await fetch(form.action, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(Object.fromEntries(new FormData(form)))
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        form.reset();
+        setStatus("Consulta enviada. Te respondo por correo con una cotización sin costo.", "ok");
+      } else {
+        setStatus("No se pudo enviar la consulta. Escríbeme directamente a Info.sgvirtual@gmail.com.", "err");
+      }
+    } catch (err) {
+      setStatus("Sin conexión. Revisa tu internet e inténtalo de nuevo, o escríbeme a Info.sgvirtual@gmail.com.", "err");
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Enviar consulta";
+    }
+  });
+</script>
+</body>
+</html>
